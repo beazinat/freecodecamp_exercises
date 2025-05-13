@@ -19,6 +19,7 @@ public class RefreshTokenService {
     
     private final RefreshTokenRepository refreshTokenRepository;
 
+    // Generate a UUID for the refresh token and set the created date to the current time
     public RefreshToken generateRefreshToken() {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(UUID.randomUUID().toString());
@@ -27,6 +28,7 @@ public class RefreshTokenService {
         return refreshTokenRepository.save(refreshToken);
     }
 
+    // Validate the refresh token by checking if it exists in the database
     void validateRefreshToken(String token) {
         refreshTokenRepository.findByToken(token)
                 .orElseThrow(() -> new SpringRedditException("Invalid refresh Token"));

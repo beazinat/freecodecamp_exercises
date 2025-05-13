@@ -29,11 +29,13 @@ import com.example.springredditclone.service.MailService;
 
 import lombok.AllArgsConstructor;
 
+// Indicates that this class is a service component in the Spring framework and allows for dependency injection
 @Service
 @AllArgsConstructor
 @Transactional
 public class AuthService {
 
+    // Dependencies for password encoding, user repository, verification token repository, mail service, authentication manager, JWT provider, and refresh token service are injected through constructor injection
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final VerificationTokenRepository verificationTokenRepository;
@@ -42,6 +44,9 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
 
+
+    // This method takes a RegisterRequest object, creates a new User object, and saves it to the database
+    // It also generates a verification token for the user and sends an email with the activation link
     public void signup(RegisterRequest registerRequest) {
         User user = new User();
         user.setUsername(registerRequest.getUsername());
@@ -59,6 +64,7 @@ public class AuthService {
                 "http://localhost:8080/api/auth/accountVerification/" + token));
     }
 
+    // This method retrieves the currently logged-in user from the security context. Then, it fetches the user from the database using the username from the JWT token
     @Transactional(readOnly = true)
     public User getCurrentUser() {
         Jwt principal = (Jwt) SecurityContextHolder.
@@ -67,6 +73,7 @@ public class AuthService {
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getSubject()));
     }
 
+    // This method fetches the user associated with the verification token and enables the user account
     private void fetchUserAndEnable(VerificationToken verificationToken) {
         String username = verificationToken.getUser().getUsername();
         User user = userRepository.findByUsername(username).orElseThrow(() -> new SpringRedditException("User not found with name - " + username));
@@ -74,6 +81,7 @@ public class AuthService {
         userRepository.save(user);
     }
 
+    // This method generates a verification token for the user and saves it to the database. Then, it returns the token as a string. The token is a UUID, which is a universally unique identifier
     private String generateVerificationToken(User user) {
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken();
@@ -84,11 +92,13 @@ public class AuthService {
         return token;
     }
 
+    // This method verifies the token passed in the request. It fetches the verification token from the database and enables the user account associated with it
     public void verifyAccount(String token) {
         Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
         fetchUserAndEnable(verificationToken.orElseThrow(() -> new SpringRedditException("Invalid Token")));
     }
 
+    // This method handles user login. It authenticates the user using the authentication manager and generates a JWT token for the user. It also generates a refresh token and sets the expiration time for the token
     public AuthResponse login(LoginRequest loginRequest) {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword()));
@@ -102,6 +112,7 @@ public class AuthService {
                 .build();
     }
 
+    // This method refreshes the JWT token using the refresh token provided in the request
     public AuthResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
         refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
         String token = jwtProvider.generateTokenWithUsername(refreshTokenRequest.getUsername());
@@ -113,6 +124,7 @@ public class AuthService {
                 .build();
     }
 
+    // This method checks if the user is logged in by checking the authentication object in the security context
     public boolean isLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();

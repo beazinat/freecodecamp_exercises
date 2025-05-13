@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
+    //It uses the UserRepository to find the user by username and throws an exception if the user is not found. It then creates a UserDetails object with the user's information and returns it
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
@@ -37,6 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 true, getAuthorities("USER"));
     }
 
+    //It takes in a role and returns a collection of GrantedAuthority objects
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         return singletonList(new SimpleGrantedAuthority(role));
     }
