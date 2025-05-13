@@ -1,4 +1,4 @@
-package com.example.springredditclone.config;
+package com.example.springredditclone.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

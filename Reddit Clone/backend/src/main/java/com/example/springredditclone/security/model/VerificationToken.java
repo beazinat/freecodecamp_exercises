@@ -1,4 +1,4 @@
-package com.example.springredditclone.model;
+package com.example.springredditclone.security.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+
+import com.example.springredditclone.model.User;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;

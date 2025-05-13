@@ -1,4 +1,4 @@
-package com.example.springredditclone.controller;
+package com.example.springredditclone.security.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springredditclone.dto.RegisterRequest;
-import com.example.springredditclone.service.AuthService;
+import com.example.springredditclone.security.dto.AuthResponse;
+import com.example.springredditclone.security.dto.LoginRequest;
+import com.example.springredditclone.security.dto.RefreshTokenRequest;
+import com.example.springredditclone.security.dto.RegisterRequest;
+import com.example.springredditclone.security.service.AuthService;
+import com.example.springredditclone.security.service.RefreshTokenService;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,7 +23,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api/auth")
 @AllArgsConstructor
 public class AuthController {
-    
+
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
 
@@ -36,14 +40,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+    public AuthResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
-    @PostMapping("/refresh/token")
-    public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public AuthResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         return authService.refreshToken(refreshTokenRequest);
     }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
