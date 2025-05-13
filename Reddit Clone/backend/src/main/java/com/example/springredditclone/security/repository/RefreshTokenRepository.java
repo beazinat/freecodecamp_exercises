@@ -1,7 +1,8 @@
-package com.example.springredditclone.repository;
+package com.example.springredditclone.security.repository;
 
-import com.example.springredditclone.model.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.springredditclone.security.model.RefreshToken;
 
 import java.util.Optional;
 

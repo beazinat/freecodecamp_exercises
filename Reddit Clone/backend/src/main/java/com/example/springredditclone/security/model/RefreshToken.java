@@ -1,4 +1,4 @@
-package com.example.springredditclone.model;
+package com.example.springredditclone.security.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

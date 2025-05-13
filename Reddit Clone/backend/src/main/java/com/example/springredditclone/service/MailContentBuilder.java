@@ -1,5 +1,6 @@
 package com.example.springredditclone.service;
 
+import org.mapstruct.Context;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 

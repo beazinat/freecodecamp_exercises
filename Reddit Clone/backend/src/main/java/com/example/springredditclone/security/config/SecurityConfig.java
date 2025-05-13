@@ -1,4 +1,4 @@
-package com.example.springredditclone.config;
+package com.example.springredditclone.security.config;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
