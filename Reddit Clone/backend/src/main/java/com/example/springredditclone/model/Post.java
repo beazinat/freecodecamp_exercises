@@ -19,7 +19,7 @@ public class Post {
     private String url;
     @Lob
     private String description;
-    private Integer voteCount = 0;
+    private @Builder.Default Integer voteCount = 0;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
