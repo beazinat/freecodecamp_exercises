@@ -40,9 +40,9 @@ public abstract class PostMapper {
 
     @Mapping(target = "id", source = "postId")
     @Mapping(target = "subredditName", source = "subreddit.name")
-    @Mapping(target = "userName", source = "user.username")
-    @Mapping(target = "commentCount", expression = "java(commentRepository.countByPost(post))")
-    @Mapping(target = "duration", expression = "java(duration(post.getCreatedDate()))")
+    @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "commentCount", expression = "java(commentCount(post))")
+    @Mapping(target = "duration", expression = "java(getDuration(post))")
     @Mapping(target = "upVote", expression = "java(isPostUpVoted(post))")
     @Mapping(target = "downVote", expression = "java(isPostDownVoted(post))")
     public abstract PostResponse mapToDto(Post post);
@@ -67,8 +67,10 @@ public abstract class PostMapper {
         if (authService.isLoggedIn()) {
             Optional<Vote> voteForPostByUser = voteRepository.findTopByPostAndUserOrderByVoteIdDesc(post,
                     authService.getCurrentUser());
-            return voteForPostByUser.filter(vote -> vote.getVoteType().equals(voteType)).isPresent();
+            return voteForPostByUser.filter(vote -> vote.getVoteType().equals(voteType))
+                    .isPresent();
         }
         return false;
     }
+
 }
