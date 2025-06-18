@@ -19,6 +19,7 @@ import com.example.springredditclone.security.service.AuthService;
 
 import lombok.AllArgsConstructor;
 
+// This class is responsible for managing comments on posts in the Reddit clone application. It provides methods to save a comment, retrieve all comments for a specific post or user, and check for inappropriate language in comments. The service uses repositories to interact with the database and employs a mapper to convert between DTOs and entity models. It also sends email notifications to users when their posts receive comments. The critical part of this service is the `save` method, which maps the incoming `CommentsDto` to a `Comment` entity, associates it with the post and the current user, and saves it to the database. This encapsulates the core functionality of adding comments to posts in the application.
 @Service
 @AllArgsConstructor
 public class CommentService {

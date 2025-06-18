@@ -17,6 +17,8 @@ import com.example.springredditclone.security.service.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
+
+// This class is responsible for handling voting logic in the Reddit clone application. It allows users to upvote or downvote posts, ensuring that users cannot vote multiple times on the same post with the same vote type. The service interacts with the Post and Vote repositories to update the vote count and save the user's vote. It also uses an AuthService to retrieve the current user, ensuring that only authenticated users can vote. If a user attempts to vote again with the same type, an exception is thrown. The critical part of this service is the transactional method `vote`, which encapsulates the logic for checking existing votes, updating the post's vote count, and saving the new vote, ensuring data integrity and consistency across the database.
 @Service
 @AllArgsConstructor
 public class VoteService {

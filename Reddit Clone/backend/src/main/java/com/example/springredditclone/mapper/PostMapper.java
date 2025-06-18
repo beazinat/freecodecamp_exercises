@@ -21,6 +21,7 @@ import com.example.springredditclone.repository.VoteRepository;
 import com.example.springredditclone.security.service.AuthService;
 import com.github.marlonlom.utilities.timeago.TimeAgo;
 
+// This class is responsible for mapping between PostRequest and Post, and Post to PostResponse. Through the use of MapStruct, it generates the implementation at compile time, which improves performance and reduces boilerplate code. Besides, it also provides methods to calculate the comment count, duration since creation, and whether the post is upvoted or downvoted by the current user. The critical part of this mapper is the use of the AuthService to check the current user's vote status on the post, which is essential for providing accurate responses in the PostResponse DTO.
 @Mapper(componentModel = "spring")
 public abstract class PostMapper {
 

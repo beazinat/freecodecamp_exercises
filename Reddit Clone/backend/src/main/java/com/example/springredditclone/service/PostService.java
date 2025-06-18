@@ -25,6 +25,7 @@ import com.example.springredditclone.security.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+// This class is responsible for managing posts in the Reddit clone application. It provides methods to save a new post, retrieve a post by its ID, get all posts, and filter posts by subreddit or username. The service uses repositories to interact with the database and employs a mapper to convert between DTOs and entity models. It also handles exceptions related to missing subreddits or posts, ensuring that appropriate error messages are returned when data is not found. The use of transactions ensures that database operations are performed atomically, maintaining data integrity. The critical part of this service is the `save` method, which maps the incoming `PostRequest` to a `Post` entity, associates it with a subreddit and the current user, and saves it to the database. This encapsulates the core functionality of creating new posts in the application.
 @Service
 @AllArgsConstructor
 @Slf4j
