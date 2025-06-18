@@ -2,7 +2,7 @@ package com.example.springredditclone.security;
 
 import java.time.Instant;
 
-import org.apache.catalina.User;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -20,13 +20,18 @@ public class JwtProvider {
     @Value("${jwt.expiration.time}")
     private Long jwtExpirationInMillis;
 
-    //This method generates a JWT token using the JwtEncoder and the provided authentication object. It extracts the username from the authentication object and creates a JWT token with the username as the subject. It also sets the issuer, issued at time, expiration time, and scope of the token
+    // This method generates a JWT token using the JwtEncoder and the provided
+    // authentication object. It extracts the username from the authentication
+    // object and creates a JWT token with the username as the subject. It also sets
+    // the issuer, issued at time, expiration time, and scope of the token
     public String generateToken(Authentication authentication) {
         User principal = (User) authentication.getPrincipal();
         return generateTokenWithUsername(principal.getUsername());
     }
 
-    //This method generates a JWT token with the provided username as the subject. It uses the JwtEncoder to create a JWT token with the specified claims, including the issuer, issued at time, expiration time, and scope
+    // This method generates a JWT token with the provided username as the subject.
+    // It uses the JwtEncoder to create a JWT token with the specified claims,
+    // including the issuer, issued at time, expiration time, and scope
     public String generateTokenWithUsername(String username) {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")

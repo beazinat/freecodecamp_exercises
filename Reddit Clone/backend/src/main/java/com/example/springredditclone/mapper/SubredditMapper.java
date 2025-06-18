@@ -1,14 +1,14 @@
 package com.example.springredditclone.mapper;
 
+import java.util.List;
+
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.InheritInverseConfiguration;
 
+import com.example.springredditclone.dto.SubredditDto;
 import com.example.springredditclone.model.Post;
 import com.example.springredditclone.model.Subreddit;
-import com.example.springredditclone.dto.SubredditDto;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SubredditMapper {
